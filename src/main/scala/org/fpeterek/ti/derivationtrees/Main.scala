@@ -1,14 +1,14 @@
 package org.fpeterek.ti.derivationtrees
 
-import org.fpeterek.ti.derivationtrees.cfg.{GrammarAtom, RuleSet}
+import org.fpeterek.ti.derivationtrees.cfg.{Grammar, GrammarAtom, GrammarLoader, RuleSet}
 import org.fpeterek.ti.derivationtrees.cfg.GrammarExpansion.{AtomConverter, RuleFromAtoms, RuleSetFromRules}
-import org.fpeterek.ti.derivationtrees.cfg.Rule.{FormRule, Epsilon}
+import org.fpeterek.ti.derivationtrees.cfg.Rule.{Epsilon, FormRule}
 
 import scala.language.postfixOps
 
 object Main {
 
-  val grammar: Map[GrammarAtom, RuleSet] = {
+  val grammar: Grammar = {
     val Start = "Start"n
     val Expand = "Expand"n
     val Zero = "Zero"n
@@ -16,7 +16,7 @@ object Main {
     val zero = "0"t
     val one = "1"t
 
-    Map(
+    Grammar(
       Start  -> ((Zero * Expand) | (Zero * One) | Epsilon),
       Expand -> ((Start * One) | FormRule),
       Zero   -> (zero | FormRule),
@@ -25,6 +25,13 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
+    grammar.terminals.foreach(t => println(f"Terminal: '${t.value}'"))
+    grammar.nonTerminals.foreach(nt => println(f"NonTerminal: '${nt.value}'"))
+
+    val g2 = GrammarLoader.fromFile("grammars/binary.txt")
+
+    println(grammar)
+    println(g2)
   }
 
 }
