@@ -9,6 +9,7 @@ object Grammar {
 class Grammar(grammarRules: (NonTerminal, RuleSet)*) {
 
   val rules: Map[NonTerminal, RuleSet] = grammarRules.toMap
+  val orderedRules: List[(NonTerminal, RuleSet)] = grammarRules.toList
 
   def apply(str: String): Option[RuleSet] = rules.find(_._1.value == str) match {
     case Some(value) => Some(value._2)
@@ -30,7 +31,7 @@ class Grammar(grammarRules: (NonTerminal, RuleSet)*) {
     }
   }.toList
 
-  override def toString: String = rules
+  override def toString: String = orderedRules
     .map(pair => f"${pair._1} -> ${pair._2}")
     .mkString("\n")
 }

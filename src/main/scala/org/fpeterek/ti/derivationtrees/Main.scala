@@ -29,9 +29,17 @@ object Main {
     grammar.nonTerminals.foreach(nt => println(f"NonTerminal: '${nt.value}'"))
 
     val g2 = GrammarLoader.fromFile("grammars/binary.txt")
+    val g3 = GrammarLoader.fromFile("grammars/regex.txt")
 
+    println("Grammar 1:")
     println(grammar)
+    println("--------------------------------")
+    println("Grammar 2:")
     println(g2)
+    println("--------------------------------")
+    println("Grammar 3:")
+    println(g3)
+    println("--------------------------------")
   }
 
 }

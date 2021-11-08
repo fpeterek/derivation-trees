@@ -1,0 +1,7 @@
+S -> CI | TB
+T -> CI
+B -> PS | DS
+P -> +
+D -> .
+C -> a | b
+I -> * | ε
