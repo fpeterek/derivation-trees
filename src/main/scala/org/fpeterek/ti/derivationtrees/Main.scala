@@ -10,15 +10,17 @@ object Main {
 
   val grammar: Grammar = {
     val Start = "Start"n
-    val Expand = "Expand"n
+    val Left = "Left"n
+    val Right = "Right"n
     val Zero = "Zero"n
     val One = "One"n
     val zero = "0"t
     val one = "1"t
 
     Grammar(
-      Start  -> ((Zero * Expand) | (Zero * One) | Epsilon),
-      Expand -> ((Start * One) | FormRule),
+      Start  -> ((Zero * Right) | (Zero * One) | Epsilon),
+      Left   -> ((Zero * Right) | FormRule),
+      Right  -> ((Left * One) | FormRule),
       Zero   -> (zero | FormRule),
       One    -> (one | FormRule),
     )

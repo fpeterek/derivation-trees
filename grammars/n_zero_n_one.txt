@@ -1,5 +1,6 @@
-S -> ZE | ZO | ε
-E -> SO
+S -> ZR | ZO | ε
+L -> ZR
+R -> LO | 1
 Z -> 0
 O -> 1
 

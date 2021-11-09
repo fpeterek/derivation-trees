@@ -1,5 +1,4 @@
-S -> ZN | ON
-N -> ZN | ON | ε
-O -> 1
+S -> ZN | ON | 0 | 1 | ε
+N -> ZN | ON | 0 | 1
 Z -> 0
-
+O -> 1
