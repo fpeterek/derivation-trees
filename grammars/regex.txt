@@ -1,7 +1,6 @@
-S -> CI | TB
+S -> CI | a | b | TA | CA | ε
+A -> BC | BT | AA
 T -> CI
-B -> PS | DS
-P -> +
-D -> .
+B -> + | .
 C -> a | b
-I -> * | ε
+U -> *
