@@ -1,13 +1,18 @@
-package org.fpeterek.ti.derivationtrees.cfg
+package org.fpeterek.ti.derivationtrees.cfg.grammar
 
-import org.fpeterek.ti.derivationtrees.cfg.GrammarExpansion.AtomConverter
-import org.fpeterek.ti.derivationtrees.util.Util.UseSource
+import org.fpeterek.ti.derivationtrees.cfg.grammar.GrammarImplicits.AtomConverter
 
 import scala.io.Source
-import scala.language.postfixOps
-
 
 object GrammarLoader {
+
+  implicit class UseSource(src: Source) {
+    def use[T](fn: Source => T): T = {
+      val result = fn(src)
+      src.close()
+      result
+    }
+  }
 
   private def loadLines(filename: String) = {
     Source.fromFile(filename).use {
@@ -37,7 +42,7 @@ object GrammarLoader {
               case _ => char.t
             }
           }
-          .foldLeft(Rule.empty) { (res, it) => res * it  }
+          .foldLeft(Rule.empty) { (res, it) => res * it }
       }
       .foldLeft(RuleSet.empty) { (rs, rule) => rs | rule }
 
@@ -51,7 +56,7 @@ object GrammarLoader {
     val nonTerminals = nonterminals(rules)
     val grammarRules = rules.map(rule => toGrammarRule(rule, nonTerminals))
 
-    Grammar(grammarRules:_*)
+    Grammar(grammarRules: _*)
   }
 
 }

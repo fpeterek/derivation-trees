@@ -1,4 +1,4 @@
-package org.fpeterek.ti.derivationtrees.cfg
+package org.fpeterek.ti.derivationtrees.cfg.grammar
 
 object Terminal {
   def apply(value: String): Terminal = new Terminal(value)

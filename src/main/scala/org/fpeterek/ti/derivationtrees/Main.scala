@@ -1,8 +1,8 @@
 package org.fpeterek.ti.derivationtrees
 
-import org.fpeterek.ti.derivationtrees.cfg.{Grammar, GrammarAtom, GrammarLoader, RuleSet}
-import org.fpeterek.ti.derivationtrees.cfg.GrammarExpansion.{AtomConverter, RuleFromAtoms, RuleSetFromRules}
-import org.fpeterek.ti.derivationtrees.cfg.Rule.{Epsilon, FormRule}
+import org.fpeterek.ti.derivationtrees.cfg.grammar.GrammarImplicits.{AtomConverter, RuleFromAtoms, RuleSetFromRules}
+import org.fpeterek.ti.derivationtrees.cfg.grammar.Rule.{Epsilon, FormRule}
+import org.fpeterek.ti.derivationtrees.cfg.grammar.{Grammar, GrammarLoader}
 
 import scala.language.postfixOps
 

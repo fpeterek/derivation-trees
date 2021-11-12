@@ -1,4 +1,4 @@
-package org.fpeterek.ti.derivationtrees.cfg
+package org.fpeterek.ti.derivationtrees.cfg.grammar
 
 abstract class GrammarAtom(val value: String) {
   override def hashCode(): Int = value.hashCode

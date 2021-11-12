@@ -1,4 +1,4 @@
-package org.fpeterek.ti.derivationtrees.cfg
+package org.fpeterek.ti.derivationtrees.cfg.grammar
 
 object Grammar {
   def apply(grammarRules: (NonTerminal, RuleSet)*) = new Grammar(grammarRules:_*)
