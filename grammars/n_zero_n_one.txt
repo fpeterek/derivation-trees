@@ -1,4 +1,4 @@
-S -> ZR | ZO | ε
+S -> ZR | ε
 L -> ZR
 R -> LO | 1
 Z -> 0

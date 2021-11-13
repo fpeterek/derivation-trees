@@ -1,5 +1,6 @@
 package org.fpeterek.ti.derivationtrees
 
+import org.fpeterek.ti.derivationtrees.cfg.analyzers.CykAnalyzer.GrammarGenerates
 import org.fpeterek.ti.derivationtrees.cfg.grammar.GrammarImplicits.{AtomConverter, RuleFromAtoms, RuleSetFromRules}
 import org.fpeterek.ti.derivationtrees.cfg.grammar.Rule.{Epsilon, FormRule}
 import org.fpeterek.ti.derivationtrees.cfg.grammar.{Grammar, GrammarLoader}
@@ -18,9 +19,9 @@ object Main {
     val one = "1"t
 
     Grammar(
-      Start  -> ((Zero * Right) | (Zero * One) | Epsilon),
+      Start  -> ((Zero * Right) | Epsilon),
       Left   -> ((Zero * Right) | FormRule),
-      Right  -> ((Left * One) | FormRule),
+      Right  -> ((Left * One) | one),
       Zero   -> (zero | FormRule),
       One    -> (one | FormRule),
     )
@@ -42,6 +43,27 @@ object Main {
     println("Grammar 3:")
     println(g3)
     println("--------------------------------")
+
+    println(s"Grammar 1 generates 000111: ${grammar generates "000111"}")
+    println(s"Grammar 1 generates 01: ${grammar generates "01"}")
+    println(s"Grammar 1 generates 0011: ${grammar generates "0011"}")
+    println(s"Grammar 1 generates 0000111: ${grammar generates "0000111"}")
+    println(s"Grammar 1 generates 00111: ${grammar generates "00111"}")
+    println(s"Grammar 1 generates 010101: ${grammar generates "010101"}")
+    println(s"Grammar 1 generates 1100: ${grammar generates "1100"}")
+    println(s"Grammar 1 generates epsilon: ${grammar generates ""}")
+
+    println(s"Grammar 2 generates 1100: ${g2 generates "1100"}")
+    println(s"Grammar 2 generates 1001101: ${g2 generates "1001101"}")
+
+    println(s"Grammar 3 generates a+b: ${g3 generates "a+b"}")
+    println(s"Grammar 3 generates a+b.a: ${g3 generates "a+b.a"}")
+    println(s"Grammar 3 generates a++b.a: ${g3 generates "a++b.a"}")
+    println(s"Grammar 3 generates a*+b.a: ${g3 generates "a*+b.a"}")
+    println(s"Grammar 3 generates a*+b*.a*: ${g3 generates "a*+b*.a*"}")
+    println(s"Grammar 3 generates a*+b.*.a*: ${g3 generates "a*+b.*.a*"}")
+    println(s"Grammar 3 generates a*+b.*a: ${g3 generates "a*+b.*a"}")
+    println(s"Grammar 3 generates a*+b*+a*.b*: ${g3 generates "a*+b*+a*.b*"}")
   }
 
 }

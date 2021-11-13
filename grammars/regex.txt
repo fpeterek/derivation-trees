@@ -3,4 +3,4 @@ A -> BC | BT | AA
 T -> CI
 B -> + | .
 C -> a | b
-U -> *
+I -> *
