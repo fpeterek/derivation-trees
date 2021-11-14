@@ -24,14 +24,14 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
 
   private val matrix = mutable.ListBuffer(
     (0 until word.length).map { i =>
-      (0 until (word.length-i)).map(_ => List[NonTerminal]())
+      (0 until (word.length-i)).map(_ => Seq[ParseNode]())
     }:_*
   )
 
   private def contract(terminal: Terminal) = grammar.rules
     .filter(_._2 matches Seq(terminal))
     .keys
-    .toSet
+    .map(ParseNode(_, List()))
     .toList
 
   private def fillFromTerminals(): Unit = {
@@ -40,19 +40,23 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
 
   private def splits(wordLen: Int) = (1 until wordLen).map { it => (it, wordLen-it) }
 
-  def contractSplit(split: (Int, Int), begin: Int): List[NonTerminal] = {
+  private def contractSplit(split: (Int, Int), begin: Int): List[ParseNode] = {
     val left = matrix(split._1 - 1)(begin)
     val right = matrix(split._2 - 1)(begin + split._1)
 
     left
-      .flatMap { l => right.map(List(l, _)) }
-      .flatMap { nts => grammar.rulesFor(nts) }
+      .flatMap { l => right.map((l, _)) }
+      .flatMap { nts =>
+        grammar
+          .rulesFor(List(nts._1.nt, nts._2.nt))
+          .map { nt => ParseNode(nt, List(nts)) }
+      }
+      .toList
   }
 
   private def contractWord(row: Int, begin: Int) =
     splits(row+1)
       .flatMap { split => contractSplit(split, begin) }
-      .toSet
       .toList
 
   private def contractRow(row: Int): Unit = {
@@ -71,8 +75,8 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
     val maxLen = lines.flatMap(_.map(_.length)).max
 
     lines
-      .map {
-        _
+      .map { line =>
+        line
           .map { exp => s"$exp${" " * (maxLen - exp.length)}" }
           .mkString(" | ")
       }
@@ -80,13 +84,17 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
   }
 
   private def matrixTop = matrix.last.head
+  private def matrixTopNTs = matrix.last.head.map(_.nt)
 
-  private def acceptsWord = {
+  private def analyzeWord(): Unit = {
     fillFromTerminals()
     contractNonTerminals()
-    printMatrix()
+  }
 
-    matrixTop contains grammar.start
+  private def acceptsWord = {
+    analyzeWord()
+    // printMatrix()
+    matrixTopNTs contains grammar.start
   }
 
   def generates: Boolean = grammar.nonEmpty && word.isEmpty match {
@@ -94,6 +102,25 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
     case false => acceptsWord
   }
 
-  def parseTrees: Int = 0
+  private def countTrees(nodes: Seq[(ParseNode, ParseNode)]): Int = nodes
+    .map { tuple => countTrees(tuple._1) * countTrees(tuple._2) }
+    .sum
+
+  private def countTrees(node: ParseNode): Int = node.subnodes.isEmpty match {
+    case true => 1
+    case false => countTrees(node.subnodes)
+  }
+
+  private def treeCount: Int = matrixTop.filter(_.nt == grammar.start).map(countTrees).sum
+
+  def parseTrees: Int = if (grammar.isEmpty) {
+    0
+  } else if (word.isEmpty && acceptsEpsilon) {
+    1
+  } else {
+    analyzeWord()
+    // printMatrix()
+    treeCount
+  }
 
 }

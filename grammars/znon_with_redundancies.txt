@@ -1,0 +1,8 @@
+S -> ZR | ZO | ε
+L -> ZR | ER
+K -> ZR
+R -> LO | KO | 1
+Z -> 0
+E -> 0
+O -> 1
+

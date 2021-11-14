@@ -33,6 +33,7 @@ object Main {
 
     val g2 = GrammarLoader.fromFile("grammars/binary.txt")
     val g3 = GrammarLoader.fromFile("grammars/regex.txt")
+    val g4 = GrammarLoader.fromFile("grammars/znon_with_redundancies.txt")
 
     println("Grammar 1:")
     println(grammar)
@@ -44,26 +45,31 @@ object Main {
     println(g3)
     println("--------------------------------")
 
-    println(s"Grammar 1 generates 000111: ${grammar generates "000111"}")
-    println(s"Grammar 1 generates 01: ${grammar generates "01"}")
-    println(s"Grammar 1 generates 0011: ${grammar generates "0011"}")
-    println(s"Grammar 1 generates 0000111: ${grammar generates "0000111"}")
-    println(s"Grammar 1 generates 00111: ${grammar generates "00111"}")
-    println(s"Grammar 1 generates 010101: ${grammar generates "010101"}")
-    println(s"Grammar 1 generates 1100: ${grammar generates "1100"}")
-    println(s"Grammar 1 generates epsilon: ${grammar generates ""}")
+    println(s"Grammar 1 generates 000111: ${grammar parseTrees "000111"}")
+    println(s"Grammar 1 generates 01: ${grammar parseTrees "01"}")
+    println(s"Grammar 1 generates 0011: ${grammar parseTrees "0011"}")
+    println(s"Grammar 1 generates 0000111: ${grammar parseTrees "0000111"}")
+    println(s"Grammar 1 generates 00111: ${grammar parseTrees "00111"}")
+    println(s"Grammar 1 generates 010101: ${grammar parseTrees "010101"}")
+    println(s"Grammar 1 generates 1100: ${grammar parseTrees "1100"}")
+    println(s"Grammar 1 generates epsilon: ${grammar parseTrees ""}")
 
-    println(s"Grammar 2 generates 1100: ${g2 generates "1100"}")
-    println(s"Grammar 2 generates 1001101: ${g2 generates "1001101"}")
+    println(s"Grammar 2 generates 1100: ${g2 parseTrees "1100"}")
+    println(s"Grammar 2 generates 1001101: ${g2 parseTrees "1001101"}")
 
-    println(s"Grammar 3 generates a+b: ${g3 generates "a+b"}")
-    println(s"Grammar 3 generates a+b.a: ${g3 generates "a+b.a"}")
-    println(s"Grammar 3 generates a++b.a: ${g3 generates "a++b.a"}")
-    println(s"Grammar 3 generates a*+b.a: ${g3 generates "a*+b.a"}")
-    println(s"Grammar 3 generates a*+b*.a*: ${g3 generates "a*+b*.a*"}")
-    println(s"Grammar 3 generates a*+b.*.a*: ${g3 generates "a*+b.*.a*"}")
-    println(s"Grammar 3 generates a*+b.*a: ${g3 generates "a*+b.*a"}")
-    println(s"Grammar 3 generates a*+b*+a*.b*: ${g3 generates "a*+b*+a*.b*"}")
+    println(s"Grammar 3 generates a+b: ${g3 parseTrees "a+b"}")
+    println(s"Grammar 3 generates a+b.a: ${g3 parseTrees "a+b.a"}")
+    println(s"Grammar 3 generates a++b.a: ${g3 parseTrees "a++b.a"}")
+    println(s"Grammar 3 generates a*+b.a: ${g3 parseTrees "a*+b.a"}")
+    println(s"Grammar 3 generates a*+b*.a*: ${g3 parseTrees "a*+b*.a*"}")
+    println(s"Grammar 3 generates a*+b.*.a*: ${g3 parseTrees "a*+b.*.a*"}")
+    println(s"Grammar 3 generates a*+b.*a: ${g3 parseTrees "a*+b.*a"}")
+    println(s"Grammar 3 generates a*+b*+a*.b*: ${g3 parseTrees "a*+b*+a*.b*"}")
+    println(s"Grammar 3 generates a*+b*+a*.b*.a*+b*+a*.b*: ${g3 parseTrees "a*+b*+a*.b*.a*+b*+a*.b*"}")
+
+    println(s"Grammar 4 generates 01: ${g4 parseTrees "01"}")
+    println(s"Grammar 4 generates 0011: ${g4 parseTrees "0011"}")
+    println(s"Grammar 4 generates 000111: ${g4 parseTrees "000111"}")
   }
 
 }
