@@ -52,6 +52,7 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
   private def contractWord(row: Int, begin: Int) =
     splits(row+1)
       .flatMap { split => contractSplit(split, begin) }
+      .toSet
       .toList
 
   private def contractRow(row: Int): Unit = {
@@ -66,12 +67,16 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
   private def acceptsEpsilon = grammar.rulesFor(Seq(Terminal.epsilon)).nonEmpty
 
   private def printMatrix(): Unit = {
-    matrix.foreach { line =>
-      val l = line
-        .map(_.mkString("(", ", ", ")"))
-        .mkString(" | ")
-      println(l)
-    }
+    val lines = matrix.map { _.map { _.mkString("(", ", ", ")") } }
+    val maxLen = lines.flatMap(_.map(_.length)).max
+
+    lines
+      .map {
+        _
+          .map { exp => s"$exp${" " * (maxLen - exp.length)}" }
+          .mkString(" | ")
+      }
+      .foreach(println)
   }
 
   private def matrixTop = matrix.last.head
@@ -79,7 +84,7 @@ class CykAnalyzer private(val grammar: Grammar, val word: String) {
   private def acceptsWord = {
     fillFromTerminals()
     contractNonTerminals()
-    // printMatrix()
+    printMatrix()
 
     matrixTop contains grammar.start
   }
