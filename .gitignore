@@ -3,4 +3,7 @@ build/
 .idea/
 .DS_Store/
 *.swp
+*.aux
+*.log
+ti/text.txt
 
