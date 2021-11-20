@@ -72,7 +72,7 @@ Do tabulky si poté místo neterminálů ukládáme přímo tyto podstromy.
 
 Díky tomu, že je gramatika v CNF, bude strom vždy binární.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Scala]
 case class ParseNode(
   nt: NonTerminal, 
   subnodes: (ParseNode, ParseNode)
@@ -83,7 +83,7 @@ Tímto způsobem můžeme vygenerovat více stromů pro jeden neterminál,
 pokud by daný neterminál šlo vytvořit pomocí více pravidel. Alternativně
 můžeme do derivačního stromu uložit seznam všech možných párů podstromů.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Scala]
 case class ParseNode(
   nt: NonTerminal, 
   subnodes: Seq[(ParseNode, ParseNode)]
