@@ -28,15 +28,21 @@ $A \rightarrow BC \: | \: CD \: | \: a \: | \: b$
 Dynamické programování -- přístup zdola nahoru (tabulation).
 Algoritmus CYK využívá vlastností CNF. 
 
+Přístup shora dolů by byl neefektivní - při rozpisu počátečního
+neterminálu bychom museli vyzkoušet vysoké množství kombinací.
+Přístup zdola nahoru nám umožní omezit množství kombinací, které
+musíme vyzkoušet, tím, že nejprve přepíšeme terminály na neterminály,
+a poté pouze hledáme pravidla, která dané neterminály mohly vytvořit.
+
 Nejprve se všechny terminály přepíšou na odpovídající
 neterminály (jeden terminál může odpovídat více neterminálům).
-Tyto neterminály se zapíší do tabulky jako substringy délky 1.
+Tyto neterminály se zapíší do~tabulky jako substringy délky 1.
 
 Poté se prochází n-písmenné substringy ($n \in 2..length$)
 původního slova a hledají se pravidla, která odpovídají daným
 dvěma neterminálům (terminály byly eliminovány v prvním kroku a
 nahrazeny neterminály). Začíná se u substringů délky 2, délka
-substringů poté lineárně roste. Využívá se toho, že v CNF
+substringů poté lineárně roste. Využívá se toho, že v~CNF
 lze neterminál přepsat pouze na dva jiné neterminály,
 proto se substringy délky n rozdělí vždy jedině na dvě části
 ((1, n-1), (2, n-2), (3, n-3), ..., (n-1, 1)). Takto se nám
@@ -102,20 +108,20 @@ stačí spočítat počet stromů s počátečním neterminálem na vrcholu tabu
 
 Pro druhý případ stačí rekurzivně projít strom, jehož kořenem je počáteční
 neterminál, pro každou dvojici vynásobit počet derivačních podstromů pro
-levý a pravý neterminál (protože podstromy ve dvojici na sobě závisí),
+levý a pravý neterminál (protože podstromy ve dvojici na~sobě závisí),
 a sečíst počty derivačních stromů pro všechny dvojice (protože
-jednotlivé dvojice na sobě nezávisí).
+jednotlivé dvojice na~sobě nezávisí).
 
 \subsection{Počítání derivačních stromů bez jejich generování}
 
 Pokud bychom nechtěli derivační stromy generovat, stačí nám místo
 derivačního stromu pro konkrétní neterminál uložit dvojici obsahující
-daný neterminál a počet pravidel, kolik daný neterminál na daném místě
+daný neterminál a počet pravidel, kolik daný neterminál na konkrétním místě
 dokáže vygenerovat (protože negenerujeme slova, ale jdeme opačným směrem).
 Aplikujeme podobný algoritmus výpočtu množství derivačních stromů, jako
 při předchozí možnosti, nyní ovšem množství derivačních stromů počítáme
 již při aplikaci algoritmu CYK. Počty derivačních stromů v rámci jedné
-dvojice násobíme, počty pro jednotlivé dvojice v rámci sekvence dvojic
+dvojice násobíme, počty pro~jednotlivé dvojice v rámci sekvence dvojic
 sčítáme. Pokud poté na vrcholu tabulky získáme počáteční neterminál,
 celkový počet derivačních stromů slova $w$ v gramatice $G$ je roven
 číslu ve dvojici s tímto neterminálem.
